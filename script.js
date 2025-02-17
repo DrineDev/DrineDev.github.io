@@ -143,7 +143,7 @@ document.addEventListener('DOMContentLoaded', function () {
             else if (i === (index + 1) % projectItems.length) {
                 item.classList.add('next');
             }
-            item.style.transform = isMobile ? "scale(".concat(i === index ? 1 : 0.9, ")") : '';
+            // item.style.transform = isMobile ? `scale(${i === index ? 1 : 0.9})` : '';
         });
     }
     updateCarousel(projectCount);
@@ -239,63 +239,67 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
     // Window management
-    var isMobile = window.innerWidth <= 768;
-    function handleMobileScroll() {
-        var touchStartX = 0;
-        var touchStartY = 0;
-        var initialScroll = 0;
-        var scrollTimeout;
-        document.addEventListener('touchstart', function (e) {
-            touchStartX = e.touches[0].clientX;
-            touchStartY = e.touches[0].clientY;
-            initialScroll = window.scrollY;
-            clearTimeout(scrollTimeout);
-        }, { passive: true });
-        document.addEventListener('touchmove', function (e) {
-            e.preventDefault();
-        }, { passive: false });
-        document.addEventListener('touchend', function (e) {
-            var touchEndX = e.changedTouches[0].clientX;
-            var touchEndY = e.changedTouches[0].clientY;
-            var deltaX = touchEndX - touchStartX;
-            var deltaY = touchEndY - touchStartY;
-            // Determine if horizontal or vertical swipe
-            if (Math.abs(deltaX) > Math.abs(deltaY)) {
-                // Horizontal swipe
-                if (Math.abs(deltaX) > 50) { // Minimum swipe distance
-                    if (deltaX > 0 && pageCount > 0) {
-                        pageCount--;
-                        flipMainPage(pageCount);
-                    }
-                    else if (deltaX < 0 && pageCount < mainSections.length - 1) {
-                        pageCount++;
-                        flipMainPage(pageCount);
-                    }
-                }
-            }
-            else {
-                if (pageCount === 2 && Math.abs(deltaY) > 50) {
-                    if (deltaY > 0) {
-                        projectCount = (projectCount - 1 + projectItems.length) % projectItems.length;
-                    }
-                    else {
-                        projectCount = (projectCount + 1) % projectItems.length;
-                    }
-                    updateCarousel(projectCount);
-                }
-            }
-        });
-    }
-    if (isMobile) {
-        handleMobileScroll();
-    }
+    // const isMobile = window.innerWidth <= 768;
+    //
+    // function handleMobileScroll() {
+    //     let touchStartX = 0;
+    //     let touchStartY = 0;
+    //     let initialScroll = 0;
+    //     let scrollTimeout: number;
+    //
+    //     document.addEventListener('touchstart', (e) => {
+    //         touchStartX = e.touches[0].clientX;
+    //         touchStartY = e.touches[0].clientY;
+    //         initialScroll = window.scrollY;
+    //
+    //         clearTimeout(scrollTimeout);
+    //     }, { passive: true });
+    //
+    //     document.addEventListener('touchmove', (e) => {
+    //         // e.preventDefault();
+    //     }, { passive: false });
+    //
+    //     document.addEventListener('touchend', (e) => {
+    //         const touchEndX = e.changedTouches[0].clientX;
+    //         const touchEndY = e.changedTouches[0].clientY;
+    //
+    //         const deltaX = touchEndX - touchStartX;
+    //         const deltaY = touchEndY - touchStartY;
+    //
+    //         // Determine if horizontal or vertical swipe
+    //         if (Math.abs(deltaX) > Math.abs(deltaY)) {
+    //             // Horizontal swipe
+    //             if (Math.abs(deltaX) > 50) { // Minimum swipe distance
+    //                 if (deltaX > 0 && pageCount > 0) {
+    //                     pageCount--;
+    //                     flipMainPage(pageCount);
+    //                 } else if (deltaX < 0 && pageCount < mainSections.length - 1) {
+    //                     pageCount++;
+    //                     flipMainPage(pageCount);
+    //                 }
+    //             }
+    //         } else {
+    //             if (pageCount === 2 && Math.abs(deltaY) > 50) {
+    //                 if (deltaY > 0) {
+    //                     projectCount = (projectCount - 1 + projectItems.length) % projectItems.length;
+    //                 } else {
+    //                     projectCount = (projectCount + 1) % projectItems.length;
+    //                 }
+    //                 updateCarousel(projectCount);
+    //             }
+    //         }
+    //     });
+    // }
+    //
+    // if (isMobile) {
+    //     handleMobileScroll();
+    // }
     window.addEventListener('orientationchange', function () {
         setTimeout(function () {
             mainSections[pageCount].scrollIntoView({ behavior: 'auto' });
         }, 200);
     });
     // SIDE NAV FOR MOBILE
-    //
     var sidenav = document.querySelector('.sidenav');
     var menuToggle = document.querySelector('.menu-toggle');
     menuToggle.addEventListener('click', function () {

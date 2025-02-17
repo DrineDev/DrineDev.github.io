@@ -907,6 +907,13 @@ body {
 }
 
 @media (max-width: 975px) {
+    #intro,
+    #about,
+    #projects,
+    #media {
+        height: 100vh;
+    }
+
 
     /* Intro */
     .introText {
