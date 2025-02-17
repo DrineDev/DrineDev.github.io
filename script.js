@@ -65,7 +65,7 @@ document.addEventListener('DOMContentLoaded', function () {
             upBtn.style.display = pageCount === 2 ? "block" : "none";
         if (downBtn)
             downBtn.style.display = pageCount === 2 ? "block" : "none";
-        if (pageCount <= 0 && pageCount >= 3) {
+        if (pageCount >= 0 && pageCount <= 3) {
             swapColors(pageCount % 2 === 0);
         }
     }
