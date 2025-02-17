@@ -44,6 +44,10 @@ document.addEventListener('DOMContentLoaded', function () {
         flipMainPage(pageCount);
     });
     function flipMainPage(pageCount) {
+        if (pageCount < 0 || pageCount > mainSections.length - 1) {
+            return;
+        }
+        swapColors(pageCount % 2 === 0);
         if (mainPrevBtn)
             mainPrevBtn.style.display = pageCount === 0 ? "none" : "block";
         if (mainNextBtn)
@@ -65,9 +69,6 @@ document.addEventListener('DOMContentLoaded', function () {
             upBtn.style.display = pageCount === 2 ? "block" : "none";
         if (downBtn)
             downBtn.style.display = pageCount === 2 ? "block" : "none";
-        if (pageCount >= 0 && pageCount <= 3) {
-            swapColors(pageCount % 2 === 0);
-        }
     }
     // NAV BTN
     var home = document.getElementById('homeBtn');
@@ -202,13 +203,14 @@ document.addEventListener('DOMContentLoaded', function () {
         lastSwipeTime = now;
         var swipeThreshold = 10;
         if (Math.abs(deltaX) > Math.abs(deltaY) && Math.abs(deltaX) > swipeThreshold) {
-            if (deltaX > 0) {
-                pageCount = Math.max(pageCount - 1, 0);
+            if (deltaX > 0 && pageCount > 0) {
+                pageCount--;
+                flipMainPage(pageCount);
             }
-            else {
-                pageCount = Math.min(pageCount + 1, 3);
+            else if (deltaX < 0 && pageCount < mainSections.length - 1) {
+                pageCount++;
+                flipMainPage(pageCount);
             }
-            flipMainPage(pageCount);
         }
         else if (Math.abs(deltaY) > swipeThreshold) {
             if (deltaY > 0) {

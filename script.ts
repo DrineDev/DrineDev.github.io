@@ -56,6 +56,12 @@ document.addEventListener('DOMContentLoaded', function() {
     })
 
     function flipMainPage(pageCount) {
+        if (pageCount < 0 || pageCount > mainSections.length - 1) {
+            return;
+        }
+
+        swapColors(pageCount % 2 === 0);
+
         if (mainPrevBtn) mainPrevBtn.style.display = pageCount === 0 ? "none" : "block";
         if (mainNextBtn) mainNextBtn.style.display = pageCount === mainSections.length - 1 ? "none" : "block";
 
@@ -80,10 +86,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
         if (upBtn) upBtn.style.display = pageCount === 2 ? "block" : "none";
         if (downBtn) downBtn.style.display = pageCount === 2 ? "block" : "none";
-    
-        if(pageCount >= 0 && pageCount <= 3) {
-            swapColors(pageCount % 2 === 0);
-        }
     }
 
     // NAV BTN
@@ -238,12 +240,13 @@ document.addEventListener('DOMContentLoaded', function() {
         const swipeThreshold = 10;
 
         if (Math.abs(deltaX) > Math.abs(deltaY) && Math.abs(deltaX) > swipeThreshold) {
-            if (deltaX > 0) {
-                pageCount = Math.max(pageCount - 1, 0);
-            } else {
-                pageCount = Math.min(pageCount + 1, 3);
+            if (deltaX > 0 && pageCount > 0) {
+                pageCount--;
+                flipMainPage(pageCount);
+            } else if (deltaX < 0 && pageCount < mainSections.length - 1) {
+                pageCount++;
+                flipMainPage(pageCount);
             }
-            flipMainPage(pageCount);
         } else if (Math.abs(deltaY) > swipeThreshold) {
             if (deltaY > 0) {
                 projectCount = (projectCount + 1) % projectItems.length;
