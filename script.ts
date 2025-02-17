@@ -80,8 +80,10 @@ document.addEventListener('DOMContentLoaded', function() {
 
         if (upBtn) upBtn.style.display = pageCount === 2 ? "block" : "none";
         if (downBtn) downBtn.style.display = pageCount === 2 ? "block" : "none";
-
-        swapColors(pageCount % 2 === 0);
+    
+        if(pageCount <= 0 && pageCount >= 3) {
+            swapColors(pageCount % 2 === 0);
+        }
     }
 
     // NAV BTN
