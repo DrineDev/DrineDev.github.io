@@ -185,7 +185,7 @@ body {
     display: block;
     aspect-ratio: 1 / 1;
     width: 100%;
-    max-width: 30rem;
+    max-width: 20vw;
     margin: 1rem auto;
     border: 7.5px solid var(--revbg-color);
     border-radius: 50%;
@@ -207,7 +207,7 @@ body {
     margin: 0;
     padding: 2rem;
     margin-top: 1rem;
-    max-width: 50vw;
+    max-width: 60vw;
     font-size: 5rem;
     font-weight: 700;
     width: 100%;
@@ -312,7 +312,8 @@ body {
     border-bottom-right-radius: 10px;
 }
 
-.dropDownContent, .dropDownButton {
+.dropDownContent,
+.dropDownButton {
     width: min(90%, 600px);
 }
 
@@ -346,22 +347,6 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-}
-
-.iframeContainer {
-    position: relative;
-    width: 100%;
-    padding-top: 56.25%; 
-    overflow: hidden;
-}
-
-.iframeContainer iframe {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    border: none;
 }
 
 .projectItem {
@@ -435,7 +420,7 @@ body {
     font-size: 1.2rem;
     line-height: 1.6;
     color: var(--revtext-color);
-    opacity: 0;
+    opacity: 0.4;
     transform: translateY(20px);
     transition: all 0.4s ease 0.2s;
 }
@@ -500,12 +485,9 @@ body {
 
 .mediaHeader h1 {
     font-size: 10rem;
-    /* Big font size */
     font-weight: 700;
-    /* Bold weight */
     color: var(--text-color);
     text-shadow: 0.5rem 0.5rem var(--textshadow);
-    /* Proper text shadow */
     margin: 0;
     margin-bottom: 3rem;
 }
@@ -540,24 +522,21 @@ body {
 }
 
 /* Custom colors for each icon */
-.iconLink[href*="github"] .icon {
-    color: #333;
-}
-
-.iconLink[href*="facebook"] .icon {
-    color: #1877f2;
-}
-
-.iconLink[href*="linkedin"] .icon {
-    color: #0077b5;
-}
-
-.iconLink[href*="instagram"] .icon {
-    color: #e4405f;
-}
-
+.iconLink[href*="github"] .icon,
+.iconLink[href*="facebook"] .icon,
+.iconLink[href*="linkedin"] .icon,
+.iconLink[href*="instagram"] .icon,
 .iconLink[href*="discord"] .icon {
-    color: #5865f2;
+    color: var(--text-color);
+    transition: all 0.3s ease-in;
+}
+
+.iconLink[href*="github"] .icon:hover,
+.iconLink[href*="facebook"] .icon:hover,
+.iconLink[href*="linkedin"] .icon:hover,
+.iconLink[href*="instagram"] .icon:hover,
+.iconLink[href*="discord"] .icon:hover {
+    color: var(--textshadow);
 }
 
 /* Base animations */
@@ -927,7 +906,8 @@ body {
     }
 }
 
-@media (max-width: 768px) {
+@media (max-width: 975px) {
+
     /* Intro */
     .introText {
         max-width: 80vw !important;
@@ -938,7 +918,8 @@ body {
     }
 
     #edwell {
-        max-width: 70vw;
+        max-width: 50vw;
+        margin-bottom: 1rem;
     }
 
     /* About Me */
@@ -984,15 +965,9 @@ body {
         font-size: 1rem;
     }
 
+    /* PROJECTS */
     .projectsVertical {
-        display: block;
-        position: absolute;
-        font-size: 4rem;
-        color: var(--text-color);
-        white-space: nowrap;
-        text-shadow: 0.5rem 0.5rem var(--textshadow);
-        opacity: 0.3;
-        z-index: 1;
+        margin-right: 0;
     }
 
     .scrollButton {
@@ -1183,16 +1158,42 @@ body {
 
     /* Project section */
     .projectItem {
-        width: 85vw;
-        padding: 1rem;
+        width: 90vw;
+        padding: 1.5rem;
+        border-radius: 12px;
+    }
+
+    .projectItem.previous {
+        transform: translateY(-40%) scale(0.85); 
+        opacity: 0.4;
+        z-index: 1;
+    }
+
+    .projectItem.next {
+        transform: translateY(40%) scale(0.85); 
+        opacity: 0.4;
+        z-index: 1;
+    }
+
+    .projectItem.active {
+        transform: translateY(0) scale(1);
+        z-index: 2;
+    }
+
+    .projectVideo {
+        border-radius: 8px;
+        margin-bottom: 1rem;
     }
 
     .projectTitle {
-        font-size: 1.5rem;
+        font-size: 2rem;
+        text-align: center;
     }
 
     .projectDescription {
         font-size: 1rem;
+        line-height: 1.4;
+        text-align: center;
     }
 
     /* Mobile animations  */
@@ -1228,43 +1229,9 @@ body {
             transform: translateX(0);
         }
     }
-
-    /* ANIMATIONS */
-    .sidenav.open .nav-button {
-        animation: slideIn 0.5s ease forwards;
-        opacity: 0;
-    }
-
-    .sidenav.open .nav-button:nth-child(2) {
-        animation-delay: 0.1s;
-    }
-
-    .sidenav.open .nav-button:nth-child(3) {
-        animation-delay: 0.2s;
-    }
-
-    .sidenav.open .nav-button:nth-child(4) {
-        animation-delay: 0.3s;
-    }
-
-    .sidenav.open .nav-button:nth-child(5) {
-        animation-delay: 0.4s;
-    }
-
-    @keyframes slideIn {
-        from {
-            opacity: 0;
-            transform: translateX(-30px);
-        }
-
-        to {
-            opacity: 1;
-            transform: translateX(0);
-        }
-    }
 }
 
-@media (min-width: 768px) {
+@media (min-width: 975px) {
     .sidenav {
         width: 10rem;
         transition: width 0.3s ease;
