@@ -56,12 +56,6 @@ document.addEventListener('DOMContentLoaded', function() {
     })
 
     function flipMainPage(pageCount) {
-        if (pageCount < 0 || pageCount > mainSections.length - 1) {
-            return;
-        }
-
-        swapColors(pageCount % 2 === 0);
-
         if (mainPrevBtn) mainPrevBtn.style.display = pageCount === 0 ? "none" : "block";
         if (mainNextBtn) mainNextBtn.style.display = pageCount === mainSections.length - 1 ? "none" : "block";
 
@@ -86,6 +80,13 @@ document.addEventListener('DOMContentLoaded', function() {
 
         if (upBtn) upBtn.style.display = pageCount === 2 ? "block" : "none";
         if (downBtn) downBtn.style.display = pageCount === 2 ? "block" : "none";
+
+        if (pageCount < 0 || pageCount > mainSections.length - 1) {
+            return;
+        }
+
+        swapColors(pageCount % 2 === 0);
+
     }
 
     // NAV BTN
@@ -176,7 +177,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 item.classList.add('next');
             }
 
-            // item.style.transform = isMobile ? `scale(${i === index ? 1 : 0.9})` : '';
+            item.style.transform = isMobile ? `scale(${i === index ? 1 : 0.9})` : ''; 768
         });
     }
 
@@ -280,61 +281,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // Window management
-    // const isMobile = window.innerWidth <= 768;
-    //
-    // function handleMobileScroll() {
-    //     let touchStartX = 0;
-    //     let touchStartY = 0;
-    //     let initialScroll = 0;
-    //     let scrollTimeout: number;
-    //
-    //     document.addEventListener('touchstart', (e) => {
-    //         touchStartX = e.touches[0].clientX;
-    //         touchStartY = e.touches[0].clientY;
-    //         initialScroll = window.scrollY;
-    //
-    //         clearTimeout(scrollTimeout);
-    //     }, { passive: true });
-    //
-    //     document.addEventListener('touchmove', (e) => {
-    //         // e.preventDefault();
-    //     }, { passive: false });
-    //
-    //     document.addEventListener('touchend', (e) => {
-    //         const touchEndX = e.changedTouches[0].clientX;
-    //         const touchEndY = e.changedTouches[0].clientY;
-    //
-    //         const deltaX = touchEndX - touchStartX;
-    //         const deltaY = touchEndY - touchStartY;
-    //
-    //         // Determine if horizontal or vertical swipe
-    //         if (Math.abs(deltaX) > Math.abs(deltaY)) {
-    //             // Horizontal swipe
-    //             if (Math.abs(deltaX) > 50) { // Minimum swipe distance
-    //                 if (deltaX > 0 && pageCount > 0) {
-    //                     pageCount--;
-    //                     flipMainPage(pageCount);
-    //                 } else if (deltaX < 0 && pageCount < mainSections.length - 1) {
-    //                     pageCount++;
-    //                     flipMainPage(pageCount);
-    //                 }
-    //             }
-    //         } else {
-    //             if (pageCount === 2 && Math.abs(deltaY) > 50) {
-    //                 if (deltaY > 0) {
-    //                     projectCount = (projectCount - 1 + projectItems.length) % projectItems.length;
-    //                 } else {
-    //                     projectCount = (projectCount + 1) % projectItems.length;
-    //                 }
-    //                 updateCarousel(projectCount);
-    //             }
-    //         }
-    //     });
-    // }
-    //
-    // if (isMobile) {
-    //     handleMobileScroll();
-    // }
+    const isMobile = window.innerWidth <= 950;
 
     window.addEventListener('orientationchange', function() {
         setTimeout(() => {
@@ -354,7 +301,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const navButtons = document.querySelectorAll('.nav-button');
     navButtons.forEach(button => {
         button.addEventListener('click', function() {
-            if (window.innerWidth <= 768) {
+            if (window.innerWidth <= 950) {
                 sidenav.classList.remove('open');
             }
         });

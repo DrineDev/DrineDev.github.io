@@ -114,7 +114,7 @@ body {
 }
 
 .sidenav:hover {
-    width: 10rem;
+    transform: scale(1.25);
 }
 
 .sidenav:hover .nav-button {
@@ -906,12 +906,13 @@ body {
     }
 }
 
-@media (max-width: 975px) {
+@media (max-width: 950px) {
     #intro,
     #about,
     #projects,
     #media {
         height: 100vh;
+        width: 100vw;
     }
 
 
@@ -1035,10 +1036,13 @@ body {
     }
 
     .sidenav {
-        width: 4rem;
-        height: 4rem;
+        width: 100%;
+        height: 100%;
         background-color: var(--revbg-color);
+        aspect-ratio: 1 / 1;
         border-radius: 50%;
+        max-width: 4rem;
+        max-height: 4rem;
         padding: 0;
         display: flex;
         justify-content: center;
@@ -1089,6 +1093,14 @@ body {
     .sidenav.open .nav-button {
         display: block;
         animation: fadeIn 0.5s ease forwards;
+    }
+
+
+    .sidenav:not(:hover) {
+        width: 100%;
+        height: 100%;
+        max-width: 3rem;
+        max-height: 3rem;
     }
 
     @keyframes fadeIn {
@@ -1238,7 +1250,7 @@ body {
     }
 }
 
-@media (min-width: 975px) {
+@media (min-width: 950px) {
     .sidenav {
         width: 10rem;
         transition: width 0.3s ease;
