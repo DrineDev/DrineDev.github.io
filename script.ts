@@ -84,9 +84,6 @@ document.addEventListener('DOMContentLoaded', function() {
         if (pageCount < 0 || pageCount > mainSections.length - 1) {
             return;
         }
-
-        swapColors(pageCount % 2 === 0);
-
     }
 
     // NAV BTN
@@ -121,7 +118,12 @@ document.addEventListener('DOMContentLoaded', function() {
     })
 
     function downloadResume() {
-        alert('Download Resume Clicked');
+        const link = document.createElement('a');
+        link.href = 'resume.pdf'; 
+        link.download = 'resume.pdf'; 
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
     }
 
     // ABOUT ME PAGE
@@ -258,28 +260,6 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-    // COLOR SWAP
-    function swapColors(isEvenPage: boolean) {
-        const root = document.documentElement;
-        if (!isEvenPage) {
-            const originalText = getComputedStyle(root).getPropertyValue('--text-color');
-            const originalBg = getComputedStyle(root).getPropertyValue('--bg-color');
-
-            const reverseText = getComputedStyle(root).getPropertyValue('--revtext-color');
-            const reverseBg = getComputedStyle(root).getPropertyValue('--revbg-color');
-
-            root.style.setProperty('--text-color', reverseText);
-            root.style.setProperty('--bg-color', reverseBg);
-            root.style.setProperty('--revtext-color', originalText);
-            root.style.setProperty('--revbg-color', originalBg);
-        } else {
-            root.style.setProperty('--text-color', '#111');
-            root.style.setProperty('--bg-color', '#F8F8F8');
-            root.style.setProperty('--revtext-color', '#F8F8F8');
-            root.style.setProperty('--revbg-color', '#111');
-        }
-    }
-
     // Window management
     const isMobile = window.innerWidth <= 950;
 
@@ -297,7 +277,6 @@ document.addEventListener('DOMContentLoaded', function() {
         sidenav.classList.toggle('open');
     });
 
-    // Close menu when clicking a nav button (optional)
     const navButtons = document.querySelectorAll('.nav-button');
     navButtons.forEach(button => {
         button.addEventListener('click', function() {
@@ -306,4 +285,48 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     });
+
+    // THEME SELECT
+    const themeToggle = document.querySelector('.themeToggle');
+
+    if (localStorage.getItem('theme') === 'dark') {
+        swapColors(false);
+        document.body.classList.add('darkMode');
+    } else {
+        swapColors(true);
+    }
+
+    themeToggle.addEventListener('click', function() {
+        document.body.classList.toggle('darkMode');
+
+        const isDarkMode = document.body.classList.contains('darkMode');
+        swapColors(!isDarkMode);
+
+        if (isDarkMode) {
+            localStorage.setItem('theme', 'dark');
+        } else {
+            localStorage.setItem('theme', 'light');
+        }
+    });
+
+    function swapColors(isDarkMode: boolean) {
+        const root = document.documentElement;
+        if (!isDarkMode) {
+            const originalText = getComputedStyle(root).getPropertyValue('--text-color').trim();
+            const originalBg = getComputedStyle(root).getPropertyValue('--bg-color').trim();
+            const reverseText = getComputedStyle(root).getPropertyValue('--revtext-color').trim();
+            const reverseBg = getComputedStyle(root).getPropertyValue('--revbg-color').trim();
+
+            root.style.setProperty('--text-color', reverseText);
+            root.style.setProperty('--bg-color', reverseBg);
+            root.style.setProperty('--revtext-color', originalText);
+            root.style.setProperty('--revbg-color', originalBg);
+        } else {
+            root.style.setProperty('--text-color', '#111');
+            root.style.setProperty('--bg-color', '#F8F8F8');
+            root.style.setProperty('--revtext-color', '#F8F8F8');
+            root.style.setProperty('--revbg-color', '#111');
+        }
+    }
+
 });

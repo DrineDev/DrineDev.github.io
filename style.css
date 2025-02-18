@@ -27,6 +27,7 @@ body {
     display: flex;
     overflow: hidden;
     height: 100vh;
+    background-color: var(--bg-color);
 }
 
 .scrollButton {
@@ -64,10 +65,61 @@ body {
     z-index: 4;
 }
 
+.sidenav .themeToggle {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 50%;
+    margin: 1rem auto;
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.sidenav .themeToggle:hover {
+    background-color: rgba(0, 0, 0, 0.1);
+}
+
+.sidenav .themeIcon {
+    width: 1.5rem;
+    height: 1.5rem;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    fill: var(--text-color);
+    transition: opacity 0.3s ease, transform 0.5s ease;
+}
+
+.sunIcon {
+    opacity: 0;
+    transform: translate(-50%, -50%) rotate(90deg) scale(0);
+}
+
+.moonIcon {
+    opacity: 1;
+    transform: translate(-50%, -50%) rotate(0) scale(1);
+}
+
+.darkMode .sunIcon {
+    opacity: 1;
+    transform: translate(-50%, -50%) rotate(0) scale(1);
+}
+
+.darkMode .moonIcon {
+    opacity: 0;
+    transform: translate(-50%, -50%) rotate(-90deg) scale(0);
+}
+
 .sidenav {
     width: 10rem;
     background-color: var(--bg-color);
     padding: 1rem;
+    margin: 1rem;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -108,6 +160,11 @@ body {
     transition: opacity 0.2s ease;
 }
 
+.sidenav:not(:hover) .themeToggle {
+    opacity: 0;
+    transition: opacity 0.2s ease;
+}
+
 .sidenav:not(:hover) .download-btn {
     opacity: 0;
     transition: opacity 0.2s ease;
@@ -128,9 +185,9 @@ body {
 }
 
 .sidenav .download-btn {
+    border: none;
     font-weight: 900;
     border-radius: 8px;
-    /* border: 3px solid var(--revbg-color); */
     background-color: var(--textshadow);
     color: var(--revtext-color);
     padding: 1rem;
@@ -187,7 +244,7 @@ body {
     width: 100%;
     max-width: 20vw;
     margin: 1rem auto;
-    border: 7.5px solid var(--revbg-color);
+    border: 7.5px solid var(--text-color);
     border-radius: 50%;
     clip-path: circle();
     transition: transform 0.5s ease;
@@ -204,6 +261,7 @@ body {
 }
 
 .introText {
+    color: var(--text-color);
     margin: 0;
     padding: 2rem;
     margin-top: 1rem;
@@ -304,12 +362,8 @@ body {
 }
 
 .dropDownContent.active {
+    border-bottom: 2px solid var(--text-color);
     transition: height 0.5s ease-in;
-}
-
-.dropDownContent[name="specialDDC"] {
-    border-bottom-left-radius: 10px;
-    border-bottom-right-radius: 10px;
 }
 
 .dropDownContent,
@@ -386,6 +440,7 @@ body {
     border-radius: 12px;
     margin-bottom: 1.5rem;
     transition: transform 0.3s ease;
+    border: 2px solid var(--textshadow);
     box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
 }
 
@@ -907,6 +962,7 @@ body {
 }
 
 @media (max-width: 950px) {
+
     #intro,
     #about,
     #projects,
@@ -914,7 +970,6 @@ body {
         height: 100vh;
         width: 100vw;
     }
-
 
     /* Intro */
     .introText {
@@ -1036,31 +1091,52 @@ body {
     }
 
     .sidenav {
-        width: 100%;
-        height: 100%;
+        width: 4rem;
+        height: 4rem;
         background-color: var(--revbg-color);
-        aspect-ratio: 1 / 1;
         border-radius: 50%;
-        max-width: 4rem;
-        max-height: 4rem;
-        padding: 0;
+        padding: 1rem;
+        margin: 1rem;
         display: flex;
         justify-content: center;
         align-items: center;
-        position: fixed;
-        left: 1rem;
-        top: 1rem;
+        position: absolute;
         cursor: pointer;
         z-index: 1000;
         transition: all 0.3s ease;
         border: none;
+        max-width: 4rem;
+        max-height: 4rem;
+    }
+
+    .sidenav:not(:hover) {
+        width: 4rem;
+        height: 4rem;
+        max-width: 4rem;
+        max-height: 4rem;
+    }
+
+    .sidenav.open .themeToggle {
+        display: flex;
+        margin: 1rem auto 2rem;
+        width: 3.5rem;
+        height: 3.5rem;
+        background-color: rgba(255, 255, 255, 0.1);
+        border-radius: 50%;
+        animation: fadeIn 0.5s ease forwards;
+        animation-delay: 0.2s;
+        opacity: 1;
+    }
+
+    .sidenav.open .themeToggle .themeIcon {
+        width: 2rem;
+        height: 2rem;
+        fill: var(--revtext-color);
     }
 
     .sidenav.open {
-        width: 100vw;
-        height: 100vh;
-        left: 0;
-        top: 0;
+        width: 100%;
+        height: 100%;
         border-radius: 0;
         background-color: var(--revbg-color);
         display: flex;
@@ -1068,6 +1144,23 @@ body {
         justify-content: center;
         align-items: center;
         padding: 2rem;
+        max-width: 100vw;
+        max-height: 100vh;
+        transform: translateX(-1rem) translateY(-1rem);
+    }
+
+    .sidenav.open .themeToggle {
+        display: block;
+        margin: 0;
+        background-color: transparent;
+        animation: fadeIn 0.5s ease forwards;
+        animation-delay: 0.5s;
+    }
+
+    .sidenav.open .themeToggle .themeIcon {
+        width: 1.8rem;
+        height: 1.8rem;
+        fill: var(--revtext-color);
     }
 
     .sidenav .nav-button {
@@ -1084,23 +1177,30 @@ body {
         transition: all 0.3s ease;
     }
 
-    .sidenav .nav-button:hover {
-        background-color: rgba(255, 255, 255, 0.1);
-        border-bottom: none;
-        transform: scale(1.05);
-    }
-
     .sidenav.open .nav-button {
         display: block;
         animation: fadeIn 0.5s ease forwards;
     }
 
+    .sidenav:not(.open) .themeToggle,
+    .sidenav:not(.open) .nav-button,
+    .sidenav:not(.open) .download-btn {
+        display: none;
+    }
 
-    .sidenav:not(:hover) {
-        width: 100%;
-        height: 100%;
-        max-width: 3rem;
-        max-height: 3rem;
+    .sidenav .download-btn {
+        display: none;
+        color: var(--revtext-color);
+        background-color: var(--textshadow);
+        margin-top: 2rem;
+        opacity: 0;
+    }
+
+    .sidenav.open .download-btn {
+        display: block;
+        opacity: 1;
+        animation: fadeIn 0.5s ease forwards;
+        animation-delay: 0.3s;
     }
 
     @keyframes fadeIn {
@@ -1160,19 +1260,28 @@ body {
         transform: rotate(-45deg);
     }
 
-    .sidenav .download-btn {
-        display: none;
-        color: var(--revtext-color);
-        background-color: var(--textshadow);
-        margin-top: 2rem;
-        opacity: 0;
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
     }
 
-    .sidenav.open .download-btn {
-        display: block;
-        opacity: 1;
-        animation: fadeIn 0.5s ease forwards;
-        animation-delay: 0.3s;
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
     }
 
     /* Project section */
@@ -1183,13 +1292,13 @@ body {
     }
 
     .projectItem.previous {
-        transform: translateY(-40%) scale(0.85); 
+        transform: translateY(-40%) scale(0.85);
         opacity: 0.4;
         z-index: 1;
     }
 
     .projectItem.next {
-        transform: translateY(40%) scale(0.85); 
+        transform: translateY(40%) scale(0.85);
         opacity: 0.4;
         z-index: 1;
     }
@@ -1248,6 +1357,7 @@ body {
             transform: translateX(0);
         }
     }
+
 }
 
 @media (min-width: 950px) {

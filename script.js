@@ -68,7 +68,6 @@ document.addEventListener('DOMContentLoaded', function () {
         if (pageCount < 0 || pageCount > mainSections.length - 1) {
             return;
         }
-        swapColors(pageCount % 2 === 0);
     }
     // NAV BTN
     var home = document.getElementById('homeBtn');
@@ -96,7 +95,12 @@ document.addEventListener('DOMContentLoaded', function () {
         downloadResume();
     });
     function downloadResume() {
-        alert('Download Resume Clicked');
+        var link = document.createElement('a');
+        link.href = 'resume.pdf';
+        link.download = 'resume.pdf';
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
     }
     // ABOUT ME PAGE
     var dropDownButtons = document.querySelectorAll('.dropDownButton');
@@ -223,26 +227,6 @@ document.addEventListener('DOMContentLoaded', function () {
             updateCarousel(projectCount);
         }
     }
-    // COLOR SWAP
-    function swapColors(isEvenPage) {
-        var root = document.documentElement;
-        if (!isEvenPage) {
-            var originalText = getComputedStyle(root).getPropertyValue('--text-color');
-            var originalBg = getComputedStyle(root).getPropertyValue('--bg-color');
-            var reverseText = getComputedStyle(root).getPropertyValue('--revtext-color');
-            var reverseBg = getComputedStyle(root).getPropertyValue('--revbg-color');
-            root.style.setProperty('--text-color', reverseText);
-            root.style.setProperty('--bg-color', reverseBg);
-            root.style.setProperty('--revtext-color', originalText);
-            root.style.setProperty('--revbg-color', originalBg);
-        }
-        else {
-            root.style.setProperty('--text-color', '#111');
-            root.style.setProperty('--bg-color', '#F8F8F8');
-            root.style.setProperty('--revtext-color', '#F8F8F8');
-            root.style.setProperty('--revbg-color', '#111');
-        }
-    }
     // Window management
     var isMobile = window.innerWidth <= 950;
     window.addEventListener('orientationchange', function () {
@@ -256,7 +240,6 @@ document.addEventListener('DOMContentLoaded', function () {
     menuToggle.addEventListener('click', function () {
         sidenav.classList.toggle('open');
     });
-    // Close menu when clicking a nav button (optional)
     var navButtons = document.querySelectorAll('.nav-button');
     navButtons.forEach(function (button) {
         button.addEventListener('click', function () {
@@ -265,4 +248,43 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         });
     });
+    // THEME SELECT
+    var themeToggle = document.querySelector('.themeToggle');
+    if (localStorage.getItem('theme') === 'dark') {
+        swapColors(false);
+        document.body.classList.add('darkMode');
+    }
+    else {
+        swapColors(true);
+    }
+    themeToggle.addEventListener('click', function () {
+        document.body.classList.toggle('darkMode');
+        var isDarkMode = document.body.classList.contains('darkMode');
+        swapColors(!isDarkMode);
+        if (isDarkMode) {
+            localStorage.setItem('theme', 'dark');
+        }
+        else {
+            localStorage.setItem('theme', 'light');
+        }
+    });
+    function swapColors(isDarkMode) {
+        var root = document.documentElement;
+        if (!isDarkMode) {
+            var originalText = getComputedStyle(root).getPropertyValue('--text-color').trim();
+            var originalBg = getComputedStyle(root).getPropertyValue('--bg-color').trim();
+            var reverseText = getComputedStyle(root).getPropertyValue('--revtext-color').trim();
+            var reverseBg = getComputedStyle(root).getPropertyValue('--revbg-color').trim();
+            root.style.setProperty('--text-color', reverseText);
+            root.style.setProperty('--bg-color', reverseBg);
+            root.style.setProperty('--revtext-color', originalText);
+            root.style.setProperty('--revbg-color', originalBg);
+        }
+        else {
+            root.style.setProperty('--text-color', '#111');
+            root.style.setProperty('--bg-color', '#F8F8F8');
+            root.style.setProperty('--revtext-color', '#F8F8F8');
+            root.style.setProperty('--revbg-color', '#111');
+        }
+    }
 });
