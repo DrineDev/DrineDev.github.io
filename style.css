@@ -444,6 +444,21 @@ body {
     box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
 }
 
+.projectImage {
+    width: 100%;
+    border-radius: 12px;
+    margin-bottom: 1.5rem;
+    transition: transform 0.3s ease;
+    border: 2px solid var(--textshadow);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+    aspect-ratio: 16 / 9; 
+    object-fit: cover; 
+}
+
+.projectItem.active .projectImage:hover {
+    transform: scale(1.02);
+}
+
 .projectItem.active .projectVideo:hover {
     transform: scale(1.02);
 }
@@ -1308,7 +1323,7 @@ body {
         z-index: 2;
     }
 
-    .projectVideo {
+    .projectVideo .projectImage {
         border-radius: 8px;
         margin-bottom: 1rem;
     }
