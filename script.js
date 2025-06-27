@@ -150,8 +150,7 @@ document.addEventListener('DOMContentLoaded', function () {
             else if (i === (index + 1) % projectItems.length) {
                 item.classList.add('next');
             }
-            item.style.transform = isMobile ? "scale(".concat(i === index ? 1 : 0.9, ")") : '';
-            768;
+            item.style.transform = '';
         });
     }
     updateCarousel(projectCount);
@@ -257,17 +256,19 @@ document.addEventListener('DOMContentLoaded', function () {
     else {
         swapColors(true);
     }
-    themeToggle.addEventListener('click', function () {
-        document.body.classList.toggle('darkMode');
-        var isDarkMode = document.body.classList.contains('darkMode');
-        swapColors(!isDarkMode);
-        if (isDarkMode) {
-            localStorage.setItem('theme', 'dark');
-        }
-        else {
-            localStorage.setItem('theme', 'light');
-        }
-    });
+    if (themeToggle) {
+        themeToggle.addEventListener('click', function () {
+            document.body.classList.toggle('darkMode');
+            var isDarkMode = document.body.classList.contains('darkMode');
+            swapColors(!isDarkMode);
+            if (isDarkMode) {
+                localStorage.setItem('theme', 'dark');
+            }
+            else {
+                localStorage.setItem('theme', 'light');
+            }
+        });
+    }
     function swapColors(isDarkMode) {
         var root = document.documentElement;
         if (!isDarkMode) {

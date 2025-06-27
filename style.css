@@ -1411,3 +1411,34 @@ body {
         display: none;
     }
 }
+
+.projectLinks {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1.2rem;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.projectBtn {
+    display: inline-block;
+    padding: 0.7em 1.5em;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--revtext-color);
+    background: var(--revbg-color);
+    border: 2px solid var(--textshadow);
+    border-radius: 8px;
+    text-decoration: none;
+    transition: background 0.2s, color 0.2s, transform 0.2s, box-shadow 0.2s;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    cursor: pointer;
+}
+
+.projectBtn:hover, .projectBtn:focus {
+    background: var(--textshadow);
+    color: var(--revbg-color);
+    transform: translateY(-2px) scale(1.04);
+    box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+    text-decoration: none;
+}

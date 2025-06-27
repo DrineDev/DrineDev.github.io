@@ -179,7 +179,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 item.classList.add('next');
             }
 
-            item.style.transform = isMobile ? `scale(${i === index ? 1 : 0.9})` : ''; 768
+            item.style.transform = '';
         });
     }
 
@@ -296,18 +296,20 @@ document.addEventListener('DOMContentLoaded', function() {
         swapColors(true);
     }
 
-    themeToggle.addEventListener('click', function() {
-        document.body.classList.toggle('darkMode');
+    if (themeToggle) {
+        themeToggle.addEventListener('click', function() {
+            document.body.classList.toggle('darkMode');
 
-        const isDarkMode = document.body.classList.contains('darkMode');
-        swapColors(!isDarkMode);
+            const isDarkMode = document.body.classList.contains('darkMode');
+            swapColors(!isDarkMode);
 
-        if (isDarkMode) {
-            localStorage.setItem('theme', 'dark');
-        } else {
-            localStorage.setItem('theme', 'light');
-        }
-    });
+            if (isDarkMode) {
+                localStorage.setItem('theme', 'dark');
+            } else {
+                localStorage.setItem('theme', 'light');
+            }
+        });
+    }
 
     function swapColors(isDarkMode: boolean) {
         const root = document.documentElement;
